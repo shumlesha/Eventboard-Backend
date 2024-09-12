@@ -22,4 +22,6 @@ spring:
     url: jdbc:postgresql://${HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     user: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
-
+  devtools:
+    restart:
+      enabled: true
