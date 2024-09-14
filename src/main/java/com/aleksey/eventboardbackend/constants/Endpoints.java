@@ -10,4 +10,7 @@ public class Endpoints {
     public static final String AUTH_URL = BASE_URL + "/auth";
     public static final String REGISTER = "/register";
     public static final String LOGIN = "/login";
+
+    public static final String COMPANY_URL = BASE_URL + "/companies";
+    
 }

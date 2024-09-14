@@ -3,6 +3,7 @@ package com.aleksey.eventboardbackend.exception;
 import com.aleksey.eventboardbackend.constants.messages.ServiceMessages;
 import com.aleksey.eventboardbackend.constants.messages.ValidationMessages;
 import com.aleksey.eventboardbackend.dto.api.ErrorResponse;
+import com.aleksey.eventboardbackend.exception.company.CompanyAlreadyExistsException;
 import com.aleksey.eventboardbackend.exception.company.CompanyNotFoundException;
 import com.aleksey.eventboardbackend.exception.user.UserAlreadyExistsException;
 import com.aleksey.eventboardbackend.exception.user.UserNotFoundException;
@@ -56,6 +57,15 @@ public class CustomExceptionHandler {
         return ResponseBuilder.error(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(CompanyAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCompanyAlreadyExists(CompanyAlreadyExistsException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
         );
     }
 

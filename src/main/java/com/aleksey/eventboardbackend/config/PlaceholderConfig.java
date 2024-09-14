@@ -16,6 +16,7 @@ public class PlaceholderConfig {
                 new ClassPathResource("messages/validationmessage.properties")
         );
         properties.setOrder(Integer.MIN_VALUE);
+        properties.setFileEncoding("UTF-8");
         return properties;
     }
 }

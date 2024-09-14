@@ -53,7 +53,10 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers(AUTH_URL + REGISTER, AUTH_URL + LOGIN).permitAll()
+                                .requestMatchers(AUTH_URL + REGISTER,
+                                        AUTH_URL + LOGIN,
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated())
                 .anonymous(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

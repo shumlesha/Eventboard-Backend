@@ -23,6 +23,9 @@ public class ValidationMessages {
 
     public static final String VALID_UUID_REQUIRED_WITH_NULL = "{valid.uuid.required.with.null}";
 
+    public static final String COMPANYNAME_NOTNULL_REQUIRED = "{companyname.notnull.required}";
+    public static final String COMPANYNAME_NOTBLANK_REQUIRED = "{companyname.notblank.required}";
+    public static final String COMPANYNAME_VALID_REQUIRED = "{companyname.valid.required}";
 
 
     public static final String VALIDATION_FAILED = BUNDLE.getString("validation.failed");

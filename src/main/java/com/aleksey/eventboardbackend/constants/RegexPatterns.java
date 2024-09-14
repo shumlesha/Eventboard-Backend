@@ -13,4 +13,6 @@ public class RegexPatterns {
     public static final String EXCLAMATION_PATTERN = "!";
 
     public static final String QUESTION_PATTERN = "\\?";
+
+    public static final String COMPANY_NAME_PATTERN = "[A-Za-zА-Яа-я0-9 -]*";
 }
