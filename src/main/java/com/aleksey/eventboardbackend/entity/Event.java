@@ -39,7 +39,7 @@ public class Event {
     @Column(nullable = false)
     private LocalDateTime registrationDeadline;
 
-    @ManyToMany(mappedBy = "events")
+    @ManyToMany
     @JoinTable(
             name = "event_participant",
             joinColumns = @JoinColumn(name = "event_id"),

@@ -1,5 +1,6 @@
 package com.aleksey.eventboardbackend.entity.user;
 
+import com.aleksey.eventboardbackend.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,4 +30,6 @@ public abstract class User {
 
     @Column(nullable = false)
     private String password;
+
+    public abstract Role getRole();
 }
