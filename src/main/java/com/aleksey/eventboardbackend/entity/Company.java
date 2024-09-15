@@ -30,4 +30,12 @@ public class Company {
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Event> events = new HashSet<>();
+
+    public boolean containsManager(Manager manager) {
+        return managers.contains(manager);
+    }
+
+    public boolean containsManagerByEmail(String email) {
+        return managers.stream().anyMatch(manager -> manager.getEmail().equalsIgnoreCase(email));
+    }
 }

@@ -8,6 +8,7 @@ import com.aleksey.eventboardbackend.exception.company.CompanyAlreadyExistsExcep
 import com.aleksey.eventboardbackend.exception.company.CompanyNotFoundException;
 import com.aleksey.eventboardbackend.mapper.CompanyMapper;
 import com.aleksey.eventboardbackend.repository.CompanyRepository;
+import com.aleksey.eventboardbackend.security.CurrentUser;
 import com.aleksey.eventboardbackend.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,19 +33,19 @@ public class CompanyServiceImpl implements CompanyService  {
 
     @Override
     @Transactional
-    public CompanyDto createCompany(CreateCompanyRequest createCompanyRequest) {
+    public CompanyDto createCompany(CurrentUser currentUser, CreateCompanyRequest createCompanyRequest) {
         if (companyRepository.existsByName(createCompanyRequest.getName())) {
             throw new CompanyAlreadyExistsException(createCompanyRequest.getName());
         }
 
         Company company = companyMapper.toEntity(createCompanyRequest);
 
-        return companyMapper.toDto(companyRepository.save(company));
+        return companyMapper.toDto(companyRepository.save(company), currentUser);
     }
 
     @Override
     @Transactional
-    public CompanyDto updateCompany(UUID id, UpdateCompanyRequest updateCompanyRequest) {
+    public CompanyDto updateCompany(UUID id, CurrentUser currentUser, UpdateCompanyRequest updateCompanyRequest) {
         if (companyRepository.existsByNameAndIdNot(updateCompanyRequest.getName().trim(), id)) {
             throw new CompanyAlreadyExistsException(updateCompanyRequest.getName());
         }
@@ -53,16 +54,16 @@ public class CompanyServiceImpl implements CompanyService  {
                 .orElseThrow(() -> new CompanyNotFoundException(id));
         companyMapper.update(company, updateCompanyRequest);
 
-        return companyMapper.toDto(companyRepository.save(company));
+        return companyMapper.toDto(companyRepository.save(company), currentUser);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CompanyDto getCompany(UUID id) {
+    public CompanyDto getCompany(UUID id, CurrentUser currentUser) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new CompanyNotFoundException(id));
 
-        return companyMapper.toDto(company);
+        return companyMapper.toDto(company, currentUser);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class CompanyServiceImpl implements CompanyService  {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CompanyDto> getAllCompanies(Pageable pageable) {
-        return companyRepository.findAll(pageable).map(companyMapper::toDto);
+    public Page<CompanyDto> getAllCompanies(CurrentUser currentUser, Pageable pageable) {
+        return companyRepository.findAll(pageable).map(company -> companyMapper.toDto(company, currentUser));
     }
 }

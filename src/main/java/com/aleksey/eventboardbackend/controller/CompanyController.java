@@ -5,6 +5,7 @@ import com.aleksey.eventboardbackend.dto.api.DefaultResponse;
 import com.aleksey.eventboardbackend.dto.company.CompanyDto;
 import com.aleksey.eventboardbackend.dto.company.CreateCompanyRequest;
 import com.aleksey.eventboardbackend.dto.company.UpdateCompanyRequest;
+import com.aleksey.eventboardbackend.security.CurrentUser;
 import com.aleksey.eventboardbackend.service.CompanyService;
 import com.aleksey.eventboardbackend.util.ResponseBuilder;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +32,6 @@ import static com.aleksey.eventboardbackend.constants.messages.SwaggerMessages.*
 
 @RestController
 @RequestMapping(COMPANY_URL)
-@PreAuthorize("hasRole('DEANERY')")
 @RequiredArgsConstructor
 @Tag(name = COMPANY_TAG)
 public class CompanyController {
@@ -38,8 +39,10 @@ public class CompanyController {
 
     @PostMapping
     @Operation(summary = COMPANIES_CREATE_SUMMARY, description = COMPANIES_CREATE_DESCRIPTION)
-    public ResponseEntity<DefaultResponse<CompanyDto>> createCompany(@Validated @RequestBody CreateCompanyRequest createCompanyRequest) {
-        CompanyDto createdCompany = companyService.createCompany(createCompanyRequest);
+    @PreAuthorize("hasRole('DEANERY')")
+    public ResponseEntity<DefaultResponse<CompanyDto>> createCompany(@AuthenticationPrincipal CurrentUser currentUser,
+                                                                     @Validated @RequestBody CreateCompanyRequest createCompanyRequest) {
+        CompanyDto createdCompany = companyService.createCompany(currentUser, createCompanyRequest);
 
         return ResponseEntity.ok(
                 ResponseBuilder.success(
@@ -51,9 +54,11 @@ public class CompanyController {
 
     @PatchMapping(ID)
     @Operation(summary = COMPANIES_UPDATE_SUMMARY, description = COMPANIES_UPDATE_DESCRIPTION)
+    @PreAuthorize("hasRole('DEANERY')")
     public ResponseEntity<DefaultResponse<CompanyDto>> updateCompany(@PathVariable UUID id,
+                                                                     @AuthenticationPrincipal CurrentUser currentUser,
                                                                      @Validated @RequestBody UpdateCompanyRequest updateCompanyRequest) {
-        CompanyDto updatedCompany = companyService.updateCompany(id, updateCompanyRequest);
+        CompanyDto updatedCompany = companyService.updateCompany(id, currentUser, updateCompanyRequest);
 
         return ResponseEntity.ok(
                 ResponseBuilder.success(
@@ -65,8 +70,9 @@ public class CompanyController {
 
     @GetMapping(ID)
     @Operation(summary = COMPANIES_GET_SUMMARY, description = COMPANIES_GET_DESCRIPTION)
-    public ResponseEntity<DefaultResponse<CompanyDto>> getCompany(@PathVariable UUID id) {
-        CompanyDto company = companyService.getCompany(id);
+    public ResponseEntity<DefaultResponse<CompanyDto>> getCompany(@PathVariable UUID id,
+                                                                  @AuthenticationPrincipal CurrentUser currentUser) {
+        CompanyDto company = companyService.getCompany(id, currentUser);
 
         return ResponseEntity.ok(
                 ResponseBuilder.success(
@@ -77,6 +83,7 @@ public class CompanyController {
 
     @DeleteMapping(ID)
     @Operation(summary = COMPANIES_DELETE_SUMMARY, description = COMPANIES_DELETE_DESCRIPTION)
+    @PreAuthorize("hasRole('DEANERY')")
     public ResponseEntity<DefaultResponse<Void>> deleteCompany(@PathVariable UUID id) {
         companyService.deleteCompany(id);
 
@@ -89,9 +96,10 @@ public class CompanyController {
 
     @GetMapping
     @Operation(summary = COMPANIES_GETALL_SUMMARY, description = COMPANIES_GETALL_DESCRIPTION)
-    public ResponseEntity<DefaultResponse<Page<CompanyDto>>> getAllCompanies(@ParameterObject @PageableDefault(sort = "name",
-            direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<CompanyDto> companies = companyService.getAllCompanies(pageable);
+    public ResponseEntity<DefaultResponse<Page<CompanyDto>>> getAllCompanies(@AuthenticationPrincipal CurrentUser currentUser,
+                                                                             @ParameterObject @PageableDefault(sort = "name",
+                                                                                     direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<CompanyDto> companies = companyService.getAllCompanies(currentUser, pageable);
         return ResponseEntity.ok(
                 ResponseBuilder.success(
                         String.format(COMPANIES_SUCCESSFULLY_RETRIEVED, companies.getTotalElements()),

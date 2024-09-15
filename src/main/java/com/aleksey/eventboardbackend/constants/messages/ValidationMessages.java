@@ -27,6 +27,17 @@ public class ValidationMessages {
     public static final String COMPANYNAME_NOTBLANK_REQUIRED = "{companyname.notblank.required}";
     public static final String COMPANYNAME_VALID_REQUIRED = "{companyname.valid.required}";
 
+    public static final String EVENTNAME_NOTNULL_REQUIRED = "{eventname.notnull.required}";
+    public static final String EVENTNAME_NOTBLANK_REQUIRED = "{eventname.notblank.required}";
+    public static final String EVENTNAME_VALID_REQUIRED = "{eventname.valid.required}";
+
+    public static final String EVENTPLACE_NOTNULL_REQUIRED = "{eventplace.notnull.required}";
+    public static final String EVENTPLACE_NOTBLANK_REQUIRED = "{eventplace.notblank.required}";
+    public static final String EVENTPLACE_VALID_REQUIRED = "{eventplace.valid.required}";
+
+    public static final String EVENTSTARTDATE_FUTURE_REQUIRED = "{eventstartdate.future.required}";
+
+    public static final String EVENTREGISTRATIONDEADLINE_FUTURE_REQUIRED = "{eventregistrationdeadline.future.required}";
 
     public static final String VALIDATION_FAILED = BUNDLE.getString("validation.failed");
     public static final String NOT_READABLE = BUNDLE.getString("not.readable");

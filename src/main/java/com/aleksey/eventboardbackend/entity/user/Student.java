@@ -20,4 +20,9 @@ public class Student extends User {
     public Role getRole() {
         return Role.STUDENT;
     }
+
+    @Override
+    public boolean isConfirmed() {
+        return false;
+    }
 }

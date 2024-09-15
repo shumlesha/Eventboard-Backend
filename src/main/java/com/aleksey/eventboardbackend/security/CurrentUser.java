@@ -38,4 +38,19 @@ public class CurrentUser implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    public boolean isManager() {
+        return authorities.stream()
+               .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
+    }
+
+    public boolean isStudent() {
+        return authorities.stream()
+               .anyMatch(authority -> authority.getAuthority().equals("ROLE_STUDENT"));
+    }
+
+    public boolean isDeanery() {
+        return authorities.stream()
+               .anyMatch(authority -> authority.getAuthority().equals("ROLE_DEANERY"));
+    }
 }

@@ -12,4 +12,9 @@ public class Deanery extends User {
     public Role getRole() {
         return Role.DEANERY;
     }
+
+    @Override
+    public boolean isConfirmed() {
+        return true;
+    }
 }

@@ -23,4 +23,12 @@ public class Manager extends User {
     public Role getRole() {
         return Role.MANAGER;
     }
+
+    public boolean isInSameCompany(Company company) {
+        return this.company.equals(company);
+    }
+
+    public void confirm() {
+        this.confirmed = true;
+    }
 }

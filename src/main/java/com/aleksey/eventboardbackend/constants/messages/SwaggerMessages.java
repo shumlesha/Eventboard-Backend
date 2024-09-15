@@ -30,4 +30,33 @@ public class SwaggerMessages {
     public static final String COMPANIES_DELETE_DESCRIPTION = "${companies.delete.description}";
     public static final String COMPANIES_GETALL_SUMMARY = "${companies.getall.summary}";
     public static final String COMPANIES_GETALL_DESCRIPTION = "${companies.getall.description}";
+
+
+    public static final String EVENT_TAG = "${event.tag}";
+    public static final String EVENTS_CREATE_SUMMARY = "${events.create.summary}";
+    public static final String EVENTS_CREATE_DESCRIPTION = "${events.create.description}";
+    public static final String EVENTS_GET_SUMMARY = "${events.get.summary}";
+    public static final String EVENTS_GET_DESCRIPTION = "${events.get.description}";
+    public static final String EVENTS_UPDATE_SUMMARY = "${events.update.summary}";
+    public static final String EVENTS_UPDATE_DESCRIPTION = "${events.update.description}";
+    public static final String EVENTS_DELETE_SUMMARY = "${events.delete.summary}";
+    public static final String EVENTS_DELETE_DESCRIPTION = "${events.delete.description}";
+    public static final String EVENTS_SIGNUP_SUMMARY = "${events.signup.summary}";
+    public static final String EVENTS_SIGNUP_DESCRIPTION = "${events.signup.description}";
+    public static final String EVENTS_GETALL_SUMMARY = "${events.getall.summary}";
+    public static final String EVENTS_GETALL_DESCRIPTION = "${events.getall.description}";
+
+    public static final String MANAGERS_TAG = "${managers.tag}";
+    public static final String MANAGERS_CONFIRM_SUMMARY = "${managers.confirm.summary}";
+    public static final String MANAGERS_CONFIRM_DESCRIPTION = "${managers.confirm.description}";
+    public static final String MANAGERS_GETALL_SUMMARY = "${managers.getall.summary}";
+    public static final String MANAGERS_GETALL_DESCRIPTION = "${managers.getall.description}";
+    public static final String MANAGERS_GETMYPROFILE_SUMMARY = "${managers.getmyprofile.summary}";
+    public static final String MANAGERS_GETMYPROFILE_DESCRIPTION = "${managers.getmyprofile.description}";
+
+
+    public static final String ACCOUNT_TAG = "${account.tag}";
+    public static final String ACCOUNTS_GETMYPROFILE_SUMMARY = "${account.getmyprofile.summary}";
+    public static final String ACCOUNTS_GETMYPROFILE_DESCRIPTION = "${account.getmyprofile.description}";
+
 }

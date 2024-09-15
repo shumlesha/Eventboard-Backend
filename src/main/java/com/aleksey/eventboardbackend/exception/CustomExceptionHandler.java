@@ -5,8 +5,9 @@ import com.aleksey.eventboardbackend.constants.messages.ValidationMessages;
 import com.aleksey.eventboardbackend.dto.api.ErrorResponse;
 import com.aleksey.eventboardbackend.exception.company.CompanyAlreadyExistsException;
 import com.aleksey.eventboardbackend.exception.company.CompanyNotFoundException;
-import com.aleksey.eventboardbackend.exception.user.UserAlreadyExistsException;
-import com.aleksey.eventboardbackend.exception.user.UserNotFoundException;
+import com.aleksey.eventboardbackend.exception.company.NotInChosenCompanyException;
+import com.aleksey.eventboardbackend.exception.event.*;
+import com.aleksey.eventboardbackend.exception.user.*;
 import com.aleksey.eventboardbackend.util.ResponseBuilder;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -66,6 +67,97 @@ public class CustomExceptionHandler {
         return ResponseBuilder.error(
                 exception.getMessage(),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(NotInChosenCompanyException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleNotInChosenCompanyException(NotInChosenCompanyException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.FORBIDDEN
+        );
+    }
+
+    @ExceptionHandler(EventAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleEventAlreadyExists(EventAlreadyExistsException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(EventAlreadyFinishedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleEventAlreadyFinishedException(EventAlreadyFinishedException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.FORBIDDEN
+        );
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleEventNotFoundException(EventNotFoundException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(EventRegistrationClosedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleEventRegistrationClosedException(EventRegistrationClosedException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.FORBIDDEN
+        );
+    }
+
+    @ExceptionHandler(StudentAlreadyRegisteredException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleStudentAlreadyRegisteredException(StudentAlreadyRegisteredException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(ManagerAlreadyConfirmedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleManagerAlreadyConfirmedException(ManagerAlreadyConfirmedException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(CantConfirmManagerException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCantConfirmManagerException(CantConfirmManagerException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(CantConfirmSelfManagerException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCantConfirmSelfManagerException(CantConfirmSelfManagerException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(RegistrationDeadlineAfterStartDateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleRegistrationDeadlineAfterStartDateException(
+            RegistrationDeadlineAfterStartDateException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST
         );
     }
 
@@ -166,6 +258,7 @@ public class CustomExceptionHandler {
         log.error("\nVery sad, because I didn't handle it...\nPlease, check:\n");
         log.error(e.getMessage());
         log.error(Arrays.toString(e.getStackTrace()));
+        log.error(e.getCause().getMessage());
 
         return ResponseBuilder.error(
                 ServiceMessages.INTERNAL_MESSAGE,

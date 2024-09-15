@@ -1,5 +1,6 @@
 package com.aleksey.eventboardbackend.entity;
 
+import com.aleksey.eventboardbackend.entity.user.Manager;
 import com.aleksey.eventboardbackend.entity.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,11 +34,13 @@ public class Event {
     private String place;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "organizer_id", nullable = false)
     private Company organizer;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime registrationDeadline;
+
+    private boolean finished = false;
 
     @ManyToMany
     @JoinTable(
@@ -46,4 +49,20 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "participant_id")
     )
     private Set<Student> participants = new HashSet<>();
+
+    public boolean hasManagerAccess(Manager manager) {
+        return organizer.containsManager(manager);
+    }
+
+    public boolean isRegistrationOpen() {
+        return registrationDeadline == null || registrationDeadline.isAfter(LocalDateTime.now());
+    }
+
+    public boolean isStudentRegistered(Student student) {
+        return participants.contains(student);
+    }
+
+    public void addParticipant(Student participant) {
+        participants.add(participant);
+    }
 }

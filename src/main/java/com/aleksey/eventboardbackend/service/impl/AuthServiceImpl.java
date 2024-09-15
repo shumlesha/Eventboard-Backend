@@ -5,11 +5,10 @@ import com.aleksey.eventboardbackend.dto.user.LoginUserRequest;
 import com.aleksey.eventboardbackend.dto.user.RegisterUserRequest;
 import com.aleksey.eventboardbackend.dto.user.UserDto;
 import com.aleksey.eventboardbackend.entity.Company;
-import com.aleksey.eventboardbackend.entity.user.Manager;
 import com.aleksey.eventboardbackend.entity.user.User;
 import com.aleksey.eventboardbackend.exception.user.UserAlreadyExistsException;
 import com.aleksey.eventboardbackend.mapper.UserMapper;
-import com.aleksey.eventboardbackend.repository.UserRepository;
+import com.aleksey.eventboardbackend.repository.user.UserRepository;
 import com.aleksey.eventboardbackend.security.tokenprovider.TokenProvider;
 import com.aleksey.eventboardbackend.service.AuthService;
 import com.aleksey.eventboardbackend.service.CompanyService;
@@ -37,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public UserDto registerUser(RegisterUserRequest registerUserRequest) {
-        if (userRepository.existsByEmail(registerUserRequest.getEmail())) {
+        if (userRepository.existsByEmail(registerUserRequest.getEmail().trim())) {
             throw new UserAlreadyExistsException(RegisterUserRequest.Fields.email, registerUserRequest.getEmail());
         }
         Company company = null;

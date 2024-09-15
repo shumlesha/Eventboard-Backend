@@ -32,4 +32,14 @@ public abstract class User {
     private String password;
 
     public abstract Role getRole();
+
+    public abstract boolean isConfirmed();
+
+    public boolean isManager() {
+        return getRole() == Role.MANAGER;
+    }
+
+    public boolean isStudent() {
+        return getRole() == Role.STUDENT;
+    }
 }
