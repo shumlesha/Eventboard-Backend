@@ -33,6 +33,10 @@ public interface CompanyMapper {
     void update(@MappingTarget Company company, UpdateCompanyRequest updateCompanyRequest);
 
     default Set<ManagerDto> mapManagers(Company company, @Context CurrentUser currentUser) {
+        if (currentUser == null) {
+            return Collections.emptySet();
+        }
+
         boolean employeeOrDeanery = company.containsManagerByEmail(currentUser.getEmail()) || currentUser.isDeanery();
         if (currentUser.isStudent() || !employeeOrDeanery) {
             return Collections.emptySet();

@@ -4,6 +4,7 @@ import com.aleksey.eventboardbackend.security.tokenprovider.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -57,6 +58,7 @@ public class SecurityConfig {
                                         AUTH_URL + LOGIN,
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, COMPANY_URL).permitAll() // просмотреть компании можно еще на этапе регистрации
                                 .anyRequest().authenticated())
                 .anonymous(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
