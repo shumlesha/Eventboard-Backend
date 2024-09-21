@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
                 throw new CantConfirmSelfManagerException();
             }
 
-            if (!manager.isInSameCompany(mainManager.getCompany())) {
+            if (!manager.isInSameCompany(mainManager.getCompany()) || !mainManager.isConfirmed()) {
                 throw new CantConfirmManagerException();
             }
         }

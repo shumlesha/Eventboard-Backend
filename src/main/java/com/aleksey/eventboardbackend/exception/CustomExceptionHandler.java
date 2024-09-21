@@ -115,6 +115,15 @@ public class CustomExceptionHandler {
         );
     }
 
+    @ExceptionHandler(CantFilterBySignUpException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleCantFilterBySignUpException(CantFilterBySignUpException exception) {
+        return ResponseBuilder.error(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
     @ExceptionHandler(StudentAlreadyRegisteredException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleStudentAlreadyRegisteredException(StudentAlreadyRegisteredException exception) {

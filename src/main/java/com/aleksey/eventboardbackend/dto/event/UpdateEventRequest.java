@@ -3,6 +3,7 @@ package com.aleksey.eventboardbackend.dto.event;
 import com.aleksey.eventboardbackend.constants.RegexPatterns;
 import com.aleksey.eventboardbackend.constants.messages.ValidationMessages;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class UpdateEventRequest {
     private String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Schema(type = "string", example = "2024-09-15T17:30")
     @Future(message = ValidationMessages.EVENTSTARTDATE_FUTURE_REQUIRED)
     private LocalDateTime startDate;
 
@@ -34,6 +36,7 @@ public class UpdateEventRequest {
     private UUID organizerId;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Schema(type = "string", example = "2024-09-15T17:30")
     @Future(message = ValidationMessages.EVENTREGISTRATIONDEADLINE_FUTURE_REQUIRED)
     private LocalDateTime registrationDeadline;
 

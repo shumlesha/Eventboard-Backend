@@ -37,6 +37,7 @@ public class ServiceMessages {
     public static final String EVENTS_SUCCESSFULLY_RETRIEVED = BUNDLE.getString("events.successfully.retrieved");
     public static final String REGISTRATION_DEADLINE_AFTER_STARTDATE_MESSAGE =
             BUNDLE.getString("registration.deadline.after.startdate.message");
+    public static final String CANT_FILTER_BY_SIGNUP_MESSAGE = BUNDLE.getString("cant.filter.by.signup.message");
 
     public static final String MANAGER_SUCCESSFULLY_CONFIRMED = BUNDLE.getString("manager.successfully.confirmed");
     public static final String MANAGER_ALREADY_CONFIRMED_MESSAGE = BUNDLE.getString("manager.already.confirmed.message");

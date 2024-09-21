@@ -8,7 +8,6 @@ import com.aleksey.eventboardbackend.entity.Company;
 import com.aleksey.eventboardbackend.entity.Event;
 import com.aleksey.eventboardbackend.entity.user.Manager;
 import com.aleksey.eventboardbackend.entity.user.Student;
-import com.aleksey.eventboardbackend.exception.company.NotInChosenCompanyException;
 import com.aleksey.eventboardbackend.exception.event.*;
 import com.aleksey.eventboardbackend.mapper.EventMapper;
 import com.aleksey.eventboardbackend.repository.EventRepository;
@@ -17,6 +16,7 @@ import com.aleksey.eventboardbackend.service.CompanyService;
 import com.aleksey.eventboardbackend.service.EventService;
 import com.aleksey.eventboardbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
@@ -119,7 +120,30 @@ public class EventServiceImpl implements EventService {
         if (eventFilter.getCompanyId() != null) {
             Company company = companyService.getById(eventFilter.getCompanyId());
 
+            if (eventFilter.getSignedUp() != null) {
+
+                if (!currentUser.isStudent()) {
+                    throw new CantFilterBySignUpException();
+                }
+
+                return eventRepository.findAllWithFilters(
+                                company.getId(),
+                                eventFilter.getSignedUp(),
+                                currentUser.getEmail(),
+                                pageable)
+                        .map(event -> eventMapper.toDto(event, currentUser));
+            }
+
             return eventRepository.findAllByOrganizer(company, pageable).map(event -> eventMapper.toDto(event, currentUser));
+        }
+
+        if (eventFilter.getSignedUp() != null) {
+            if (!currentUser.isStudent()) {
+                throw new CantFilterBySignUpException();
+            }
+
+            return eventRepository.findAllBySignedUp(eventFilter.getSignedUp(), currentUser.getEmail(), pageable)
+                    .map(event -> eventMapper.toDto(event, currentUser));
         }
 
         return eventRepository.findAll(pageable).map(event -> eventMapper.toDto(event, currentUser));
